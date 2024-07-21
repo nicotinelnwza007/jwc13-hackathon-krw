@@ -130,63 +130,62 @@ const App = () => {
     <div>
       <nav className="bg-teal-500 shadow-md p-8 flex justify-between items-center">
         <div className="text-4xl text-white font-bold">
-          {" "}
           <Image src={logo} width={130} height={130} alt="Credit Card" />
         </div>
-          <ul className="flex space-x-6">
-            <li className="nav-item">
-              <a href="/" className="text-white text-lg hover:text-yellow-400">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/calculate"
-                className="text-white text-lg hover:text-yellow-400"
-              >
-                คำนวณ
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/about"
-                className="text-white text-lg hover:text-yellow-400"
-              >
-                เกี่ยวกับ
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/policy"
-                className="text-white text-lg hover:text-yellow-400"
-              >
-                นโยบาย
-              </a>
-            </li>
-          </ul>
-       
+        <ul className="flex space-x-6">
+          <li className="nav-item">
+            <a href="/" className="text-white text-lg hover:text-yellow-400">
+              Home
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="/calculate"
+              className="text-white text-lg hover:text-yellow-400"
+            >
+              คำนวณ
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="/about"
+              className="text-white text-lg hover:text-yellow-400"
+            >
+              เกี่ยวกับ
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="/policy"
+              className="text-white text-lg hover:text-yellow-400"
+            >
+              นโยบาย
+            </a>
+          </li>
+        </ul>
 
-        <div className="text-white text-xl font-bold">User</div>
+        <div className="text-white text-2xl font-bold">Login</div>
       </nav>
-      <div className="bg-[#696969] text-white">
+      <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white">
         <div className="flex gap-[8px] p-12 justify-center items-center">
           <Image src={creditcard} width={400} height={400} alt="Credit Card" />
           <Image src={creditcard2} width={400} height={400} alt="Credit Card" />
-          <Image src={plus} width={200} height={200} alt="Credit Card" />
+          <Image src={plus} width={100} height={100} alt="Add Card" />
         </div>
         <div className="border-t-4 border-yellow-500 p-4 w-4/5 mx-auto flex justify-center items-center">
           {" "}
         </div>
 
         <div className="flex gap-4 mt-10 p-8">
-          <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
+          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
             <Typography
               variant="h5"
               gutterBottom
               className=" mb-4 text-3xl font-bold"
-            ></Typography>
+            >
+              รายได้ทั้งหมด (เดือน)
+            </Typography>
             <Box component="form" noValidate autoComplete="off">
-              <div className="text-[24px] text-white">รายได้ทั้งหมด (เดือน)</div>
               <TextField
                 type="number"
                 value={salary}
@@ -195,9 +194,13 @@ const App = () => {
                 margin="normal"
                 className="bg-white rounded-lg"
               />
-              <div className="text-[24px] text-white">
+              <Typography
+                variant="h5"
+                gutterBottom
+                className="text-[24px] text-white mt-6"
+              >
                 สัดส่วนภาระหนี้ยัตรเครดิตที่รับได้(เดือน)
-              </div>
+              </Typography>
               <TextField
                 type="number"
                 value={percentage}
@@ -216,7 +219,7 @@ const App = () => {
               </Button>
             </Box>
           </div>
-          <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
+          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
             <Typography variant="h5" gutterBottom className="text-[24px] text-white">
               ใช้จ่ายกับ
             </Typography>
@@ -230,7 +233,13 @@ const App = () => {
                 margin="normal"
                 className="bg-white rounded-lg"
               />
-              <div className="text-[24px] text-white">รายจ่าย</div>
+              <Typography
+                variant="h5"
+                gutterBottom
+                className="text-[24px] text-white mt-6"
+              >
+                รายจ่าย
+              </Typography>
               <TextField
                 type="number"
                 value={expenseAmount}
@@ -271,7 +280,7 @@ const App = () => {
         </div>
 
         <div className="flex gap-4 mt-10 p-8">
-          <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
+          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
             <Typography variant="h5" gutterBottom className="text-xl font-bold">
               ยอดเงินที่สามารถใช้ได้
             </Typography>
@@ -288,11 +297,11 @@ const App = () => {
             <Typography className="mb-6">{recommendation}</Typography>
           </div>
 
-          <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
+          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
             <Typography
               variant="h5"
               gutterBottom
-              className="mt-10 mb-4 text-xl"
+              className="text-xl font-bold"
             >
               วันที่รูดบัตรนั้น
             </Typography>
