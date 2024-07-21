@@ -199,7 +199,7 @@ const App = () => {
                 gutterBottom
                 className="text-[24px] text-white mt-6"
               >
-                สัดส่วนภาระหนี้ยัตรเครดิตที่รับได้(เดือน)
+                สัดส่วนภาระหนี้บัตรเครดิตที่รับได้(เดือน)
               </Typography>
               <TextField
                 type="number"
