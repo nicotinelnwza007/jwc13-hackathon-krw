@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import creditcard from "@/app/hero/Creditcard1.png";
+import { creditCardData } from "@/app/hero/mockData";
+import creditcard from "@/app/hero/Creditcard.png";
 import {
   Container,
   TextField,
@@ -89,19 +90,18 @@ const App = () => {
     const purchase = new Date(purchaseDate);
     const dayOfPurchase = purchase.getDate();
 
-    const closingDay1 = 25; 
-    const closingDay2 = 20; 
+    const closingDay1 = 25;
+    const closingDay2 = 20;
 
     let daysUntilClosing1 = closingDay1 - dayOfPurchase;
     let daysUntilClosing2 = closingDay2 - dayOfPurchase;
-
 
     if (daysUntilClosing1 < 0) {
       daysUntilClosing1 += new Date(
         purchase.getFullYear(),
         purchase.getMonth() + 1,
         0
-      ).getDate(); 
+      ).getDate();
     }
 
     if (daysUntilClosing2 < 0) {
@@ -109,7 +109,7 @@ const App = () => {
         purchase.getFullYear(),
         purchase.getMonth() + 1,
         0
-      ).getDate(); 
+      ).getDate();
     }
 
     if (daysUntilClosing1 < daysUntilClosing2) {
@@ -125,67 +125,62 @@ const App = () => {
 
   return (
     <div>
-      <nav class="bg-teal-500 shadow-md p-8 flex justify-between items-center">
-        <div class="text-4xl text-white font-bold">Credit Buddy</div>
-        <ul class="flex space-x-6">
-          <li class="nav-item">
-            <a href="/" class="text-white text-lg">
+      <nav className="bg-teal-500 shadow-md p-8 flex justify-between items-center">
+        <div className="text-4xl text-white font-bold">Credit Buddy</div>
+        <ul className="flex space-x-6">
+          <li className="nav-item">
+            <a href="/" className="text-white text-lg">
               Home
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/calculate" class="text-white text-lg">
+          <li className="nav-item">
+            <a href="/calculate" className="text-white text-lg">
               Calculate
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/about" class="text-white text-lg">
+          <li className="nav-item">
+            <a href="/about" className="text-white text-lg">
               About us
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/policy" class="text-white text-lg">
+          <li className="nav-item">
+            <a href="/policy" className="text-white text-lg">
               Policy
             </a>
           </li>
         </ul>
-        <div class="text-white text-lg">Login</div>
+        <div className="text-white text-lg">Login</div>
       </nav>
       <div className="bg-[#575757] text-white">
-        <div className="flex gap-[8px] p-5">
-          <Image
-            src="/app/hero/Creditcard1.png"
-            width={200}
-            height={200}
-            alt="Credit Card"
-          />
-          <Image
-            src="/hero/Creditcard1.png"
-            width={200}
-            height={200}
-            alt="Credit Card"
-          />
+        <div className="flex gap-[8px] p-12 justify-center items-center">
+          <Image src={creditcard} width={400} height={400} alt="Credit Card" />
+          <Image src={creditcard} width={400} height={400} alt="Credit Card" />
         </div>
-        <div class="border-t-4 border-yellow-500 p-4 w-4/5 mx-auto flex justify-center items-center">
+        <div className="border-t-4 border-yellow-500 p-4 w-4/5 mx-auto flex justify-center items-center">
           {" "}
         </div>
         <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-4/5 mx-auto mt-10 text-white">
-        <Typography variant="h5" gutterBottom className="mt-10 mb-4 text-xl">
-            User info
+          <Typography
+            variant="h5"
+            gutterBottom
+            className="mt-10 mb-4 text-3xl font-bold"
+          >
+            Your info
           </Typography>
-
           <Box component="form" noValidate autoComplete="off">
+            <div className="text-[24px] text-white ">Salary</div>
             <TextField
-              label="เงินเดือน"
               type="number"
               value={salary}
               onChange={(e) => setSalary(Number(e.target.value))}
               fullWidth
               margin="normal"
-              className="bg-white rounded-lg "
+              className="bg-white rounded-lg"
             />
+            <div className="text-[24px] text-white ">
+              Max Debt for credit card
+            </div>
             <TextField
-              label="Percentage for Max Debt"
               type="number"
               value={percentage}
               onChange={(e) => setPercentage(Number(e.target.value))}
@@ -199,7 +194,7 @@ const App = () => {
               onClick={handleRecommendation}
               className="mt-6"
             >
-              Get Recommendation
+              Get Our Suggestion
             </Button>
           </Box>
 
@@ -216,8 +211,8 @@ const App = () => {
               margin="normal"
               className="bg-white rounded-lg"
             />
+            <div> Outcome </div>
             <TextField
-              label="Expense Amount"
               type="number"
               value={expenseAmount}
               onChange={(e) => setExpenseAmount(Number(e.target.value))}
@@ -285,7 +280,14 @@ const App = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={calculateBestCard}
+              onClick={() => {
+                const dayOfPurchase = new Date(purchaseDate).getDate();
+                if (dayOfPurchase <= 15) {
+                  setRecommendation("You should use Card 1 for this purchase.");
+                } else {
+                  setRecommendation("You should use Card 2 for this purchase.");
+                }
+              }}
               className="mt-6"
             >
               Calculate Best Card

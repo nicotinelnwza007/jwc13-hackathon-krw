@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Container, TextField, Button, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
-import { creditCardData } from './mockData';
+import { creditCardData } from '../src/app/hero/mockData';
 
 const recommendCard = (amount, creditCards) => {
   const suitableCards = creditCards.filter(card => card.creditLimit >= amount);
