@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Container, TextField, Button, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
-import { creditCardData } from './mockData';
+
+
 
 const recommendCard = (amount, creditCards) => {
   const suitableCards = creditCards.filter(card => card.creditLimit >= amount);
@@ -95,9 +96,9 @@ const App = () => {
   };
 
   return (
-    <Container>
-     <nav className="bg-white shadow-md p-8 flex justify-between">
-        <div>Credit Buddy</div>
+  <div>
+     <nav className="bg-[#46A8A7] shadow-md p-8 flex justify-between">
+        <div className='text-[36px] text-white font-bold'>Credit Buddy</div>
         <ul className="flex justify-around gap-[24px]">
           <li className="nav-item">
             <a href="/" className="nav-link">
@@ -120,6 +121,7 @@ const App = () => {
             </a>
           </li>
         </ul>
+        <div> Login </div>
       </nav>
       <Typography className=''>User Financial Information</Typography>
 
@@ -209,7 +211,7 @@ const App = () => {
           Calculate Best Card
         </Button>
       </Box>
-    </Container>
+     </div>
   );
 };
 
