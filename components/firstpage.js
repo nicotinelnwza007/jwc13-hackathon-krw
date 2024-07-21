@@ -4,6 +4,7 @@ import logo from "@/app/hero/logo.png";
 import React from "react";
 import photo from "@/app/hero/card.png";
 
+
 export default function FirstPage() {
   return (
     <div>

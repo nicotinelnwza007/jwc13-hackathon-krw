@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import Image from "next/image";
+import plus from "@/app/hero/plus.png";
 import logo from "@/app/hero/logo.png";
 
 const recommendCard = (amount, creditCards) => {
@@ -171,6 +172,7 @@ const App = () => {
         <div className="flex gap-[8px] p-12 justify-center items-center">
           <Image src={creditcard} width={400} height={400} alt="Credit Card" />
           <Image src={creditcard2} width={400} height={400} alt="Credit Card" />
+          <Image src={plus} width={200} height={200} alt="Credit Card" />
         </div>
         <div className="border-t-4 border-yellow-500 p-4 w-4/5 mx-auto flex justify-center items-center">
           {" "}
