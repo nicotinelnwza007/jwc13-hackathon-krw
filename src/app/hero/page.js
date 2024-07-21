@@ -181,10 +181,10 @@ const App = () => {
             <Typography
               variant="h5"
               gutterBottom
-              className="mt-10 mb-4 text-3xl font-bold"
+              className=" mb-4 text-3xl font-bold"
             ></Typography>
             <Box component="form" noValidate autoComplete="off">
-              <div className="text-[24px] text-white">เงินเดือน</div>
+              <div className="text-[24px] text-white">รายได้ทั้งหมด (เดือน)</div>
               <TextField
                 type="number"
                 value={salary}
@@ -194,7 +194,7 @@ const App = () => {
                 className="bg-white rounded-lg"
               />
               <div className="text-[24px] text-white">
-                เปอเซ็นต์หนี้บัตรเครดิต
+                สัดส่วนภาระหนี้ยัตรเครดิตที่รับได้(เดือน)
               </div>
               <TextField
                 type="number"
@@ -215,12 +215,12 @@ const App = () => {
             </Box>
           </div>
           <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography variant="h5" gutterBottom className="text-xl font-bold">
-              ค่าใช้จ่าย
+            <Typography variant="h5" gutterBottom className="text-[24px] text-white">
+              ใช้จ่ายกับ
             </Typography>
             <Box component="form" noValidate autoComplete="off">
               <TextField
-                label="Expense Description"
+                label="รายละเอียดค่าใช้จ่าย"
                 type="text"
                 value={expenseDescription}
                 onChange={(e) => setExpenseDescription(e.target.value)}
@@ -228,7 +228,7 @@ const App = () => {
                 margin="normal"
                 className="bg-white rounded-lg"
               />
-              <div className="text-[24px] text-white">Outcome</div>
+              <div className="text-[24px] text-white">รายจ่าย</div>
               <TextField
                 type="number"
                 value={expenseAmount}
@@ -250,10 +250,10 @@ const App = () => {
               {expenses.map((expense, index) => (
                 <ListItem
                   key={index}
-                  className="flex justify-between bg-gray-800 rounded-lg p-4 mb-2"
+                  className="flex justify-between bg-white text-black rounded-lg p-4 mb-2"
                 >
                   <ListItemText
-                    primary={`${expense.description}: ${expense.amount}`}
+                    primary={`${expense.description}: ${expense.amount} บาท`}
                   />
                   <Button
                     variant="outlined"
@@ -273,12 +273,12 @@ const App = () => {
             <Typography variant="h5" gutterBottom className="text-xl font-bold">
               ยอดเงินที่สามารถใช้ได้
             </Typography>
-            <Typography className="mb-6">{availableMoney}</Typography>
+            <Typography className="mb-6">{availableMoney} บาท</Typography>
 
             <Typography variant="h5" gutterBottom className="text-xl font-bold">
               สามารถใช้เงินกับหนี้บัตรเครดิตได้ ({percentage}% of Salary)
             </Typography>
-            <Typography className="mb-6">{maxDebt}</Typography>
+            <Typography className="mb-6">{maxDebt} บาท</Typography>
 
             <Typography variant="h5" gutterBottom className="text-xl font-bold">
               ควรใช้บัตรไหนรูดก่อนดี
@@ -296,7 +296,7 @@ const App = () => {
             </Typography>
             <Box component="form" noValidate autoComplete="off">
               <TextField
-                label="Purchase Date"
+                label="กรอกวันที่รูดบัตร"
                 type="text"
                 value={purchaseDate}
                 onChange={(e) => setPurchaseDate(e.target.value)}
@@ -311,11 +311,11 @@ const App = () => {
                   const dayOfPurchase = new Date(purchaseDate).getDate();
                   if (dayOfPurchase <= 15) {
                     setRecommendation(
-                      "You should use Card 1 for this purchase."
+                      "ควรใช้บัตรอันที่ 1 ในการรูดครั้งนี้"
                     );
                   } else {
                     setRecommendation(
-                      "You should use Card 2 for this purchase."
+                      "ควรใช้บัตรอันที่ 2 ในการรูดครั้งนี้"
                     );
                   }
                 }}
