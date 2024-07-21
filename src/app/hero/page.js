@@ -130,7 +130,7 @@ const App = () => {
       <nav className="bg-teal-500 shadow-md p-8 flex justify-between items-center">
         <div className="text-4xl text-white font-bold">
           {" "}
-          <Image src={logo} width={170} height={170} alt="Credit Card" />
+          <Image src={logo} width={130} height={130} alt="Credit Card" />
         </div>
           <ul className="flex space-x-6">
             <li className="nav-item">
