@@ -43,7 +43,7 @@ export default function FirstPage() {
         </div>
         <div className="flex flex-col text-center justify-center items-center mx-auto">
         <div className="ml-8 text-start text-white text-[32px]">
-          ให้เหมาะกับสไตล์คุณ <br /> ผ่านเว็บไซต์ช่วยวางแผนการใช้บัตรเครดิต
+          การใช้บัตรเครดิตอย่างมีกลยุทธ์ คือ <br></br>การยกระดับคุณภาพชีวิต <br></br>และเป็นกุญแจสู่การเงินที่มั่นคง
         </div>
         <Link href="/hero">
           <div className="inline-block bg-blue-500 text-white py-4 px-8 mt-8 before:rounded hover:bg-blue-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 rounded-xl">
