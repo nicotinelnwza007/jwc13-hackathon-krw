@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import Image from "next/image";
+import logo from "@/app/hero/logo.png";
 
 const recommendCard = (amount, creditCards) => {
   const suitableCards = creditCards.filter(
@@ -127,30 +128,44 @@ const App = () => {
   return (
     <div>
       <nav className="bg-teal-500 shadow-md p-8 flex justify-between items-center">
-        <div className="text-4xl text-white font-bold">Credit Buddy</div>
-        <ul className="flex space-x-6">
-          <li className="nav-item">
-            <a href="/" className="text-white text-lg">
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="/calculate" className="text-white text-lg">
-              คำนวณ
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="/about" className="text-white text-lg">
-              เกี่ยวกับ
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="/policy" className="text-white text-lg">
-              นโยบาย
-            </a>
-          </li>
-        </ul>
-        <div className="text-white text-lg">Login</div>
+        <div className="text-4xl text-white font-bold">
+          {" "}
+          <Image src={logo} width={170} height={170} alt="Credit Card" />
+        </div>
+          <ul className="flex space-x-6">
+            <li className="nav-item">
+              <a href="/" className="text-white text-lg hover:text-yellow-400">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="/calculate"
+                className="text-white text-lg hover:text-yellow-400"
+              >
+                คำนวณ
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="/about"
+                className="text-white text-lg hover:text-yellow-400"
+              >
+                เกี่ยวกับ
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                href="/policy"
+                className="text-white text-lg hover:text-yellow-400"
+              >
+                นโยบาย
+              </a>
+            </li>
+          </ul>
+       
+
+        <div className="text-white text-xl font-bold">User</div>
       </nav>
       <div className="bg-[#696969] text-white">
         <div className="flex gap-[8px] p-12 justify-center items-center">
@@ -272,7 +287,11 @@ const App = () => {
           </div>
 
           <div className="bg-[#575757] p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography variant="h5" gutterBottom className="mt-10 mb-4 text-xl">
+            <Typography
+              variant="h5"
+              gutterBottom
+              className="mt-10 mb-4 text-xl"
+            >
               วันที่รูดบัตรนั้น
             </Typography>
             <Box component="form" noValidate autoComplete="off">
@@ -291,9 +310,13 @@ const App = () => {
                 onClick={() => {
                   const dayOfPurchase = new Date(purchaseDate).getDate();
                   if (dayOfPurchase <= 15) {
-                    setRecommendation("You should use Card 1 for this purchase.");
+                    setRecommendation(
+                      "You should use Card 1 for this purchase."
+                    );
                   } else {
-                    setRecommendation("You should use Card 2 for this purchase.");
+                    setRecommendation(
+                      "You should use Card 2 for this purchase."
+                    );
                   }
                 }}
                 className="mt-6"
