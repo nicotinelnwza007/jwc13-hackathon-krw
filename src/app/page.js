@@ -1,8 +1,6 @@
-import Image from "next/image";
-import App from "next/app";
 import Hero from "../../components/hero";
+import FirstPage from "../../components/firstpage";
+
 export default function Home() {
-  return (
-  <Hero/>
-  );
+  return <FirstPage />;
 }

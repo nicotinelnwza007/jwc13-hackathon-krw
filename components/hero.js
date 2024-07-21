@@ -31,7 +31,7 @@ const Hero = () => {
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [recommendation, setRecommendation] = useState('');
   const [availableMoney, setAvailableMoney] = useState(0);
-  const [percentage, setPercentage] = useState(20); // Default percentage is 20%
+  const [percentage, setPercentage] = useState(20); 
   const [maxDebt, setMaxDebt] = useState(0);
   const [expenses, setExpenses] = useState([]);
   const [expenseDescription, setExpenseDescription] = useState('');
@@ -65,15 +65,15 @@ const Hero = () => {
   };
 
   return (
-    <div>
-      <h1>Credit Card Information</h1>
+    <div className="flex justify-center">
+      {/* <h1>Credit Card Information</h1>
       {creditCardData.map((card, index) => (
         <div key={index}>
           <p><strong>Card Name:</strong> {card.cardName}</p>
           <p><strong>Billing Cycle:</strong> {card.billingCycle}</p>
           <p><strong>Credit Limit:</strong> {card.creditLimit}</p>
         </div>
-      ))}
+      ))} */}
 
       <h2>User Financial Information</h2>
       <div>
