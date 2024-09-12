@@ -1,28 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { creditCardData } from "@/app/hero/mockData";
-import creditcard from "@/app/hero/Creditcard.png";
-import creditcard2 from "@/app/hero/Creditcard2.png";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import React from "react";
 import Image from "next/image";
-import plus from "@/app/hero/plus.png";
-import logo from "@/app/hero/logo.png";
 
+// Function to recommend the best credit card
 const recommendCard = (amount, creditCards) => {
-  const suitableCards = creditCards.filter(
-    (card) => card.creditLimit >= amount
-  );
+  const suitableCards = creditCards.filter((card) => card.creditLimit >= amount);
 
   if (suitableCards.length === 0) {
     return "No card has enough credit limit to make this purchase.";
@@ -54,41 +37,57 @@ const App = () => {
   const [expenses, setExpenses] = useState([]);
   const [expenseDescription, setExpenseDescription] = useState("");
   const [expenseAmount, setExpenseAmount] = useState(0);
+  const [creditCards, setCreditCards] = useState([]);
+  const [cardName, setCardName] = useState("");
+  const [creditLimit, setCreditLimit] = useState(0);
+  const [billingCycle, setBillingCycle] = useState("");
   const [purchaseDate, setPurchaseDate] = useState("");
+  const [showPopup, setShowPopup] = useState(false); // For the popup
 
+  // Calculate available money based on salary and expenses
   useEffect(() => {
-    const totalExpenses = expenses.reduce(
-      (sum, expense) => sum + expense.amount,
-      0
-    );
+    const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     setAvailableMoney(salary - totalExpenses);
   }, [salary, expenses]);
 
+  // Update maximum debt based on salary and the percentage provided
   useEffect(() => {
     setMaxDebt((salary * percentage) / 100);
   }, [salary, percentage]);
 
+  // Handle recommendation and show popup
   const handleRecommendation = () => {
-    const recommendation = recommendCard(purchaseAmount, creditCardData);
+    const recommendation = recommendCard(purchaseAmount, creditCards);
     setRecommendation(recommendation);
+    setShowPopup(true); // Trigger the popup
   };
 
+  // Add an expense to the list
   const handleAddExpense = () => {
     if (expenseDescription && expenseAmount > 0) {
-      setExpenses([
-        ...expenses,
-        { description: expenseDescription, amount: Number(expenseAmount) },
-      ]);
+      setExpenses([...expenses, { description: expenseDescription, amount: Number(expenseAmount) }]);
       setExpenseDescription("");
       setExpenseAmount(0);
     }
   };
 
+  // Remove an expense from the list
   const handleRemoveExpense = (index) => {
     const newExpenses = expenses.filter((_, i) => i !== index);
     setExpenses(newExpenses);
   };
 
+  // Add a credit card to the list
+  const handleAddCard = () => {
+    if (cardName && creditLimit > 0 && billingCycle) {
+      setCreditCards([...creditCards, { cardName, creditLimit: Number(creditLimit), billingCycle }]);
+      setCardName("");
+      setCreditLimit(0);
+      setBillingCycle("");
+    }
+  };
+
+  // Calculate the best card based on the purchase date
   const calculateBestCard = () => {
     const purchase = new Date(purchaseDate);
     const dayOfPurchase = purchase.getDate();
@@ -100,245 +99,161 @@ const App = () => {
     let daysUntilClosing2 = closingDay2 - dayOfPurchase;
 
     if (daysUntilClosing1 < 0) {
-      daysUntilClosing1 += new Date(
-        purchase.getFullYear(),
-        purchase.getMonth() + 1,
-        0
-      ).getDate();
+      daysUntilClosing1 += new Date(purchase.getFullYear(), purchase.getMonth() + 1, 0).getDate();
     }
 
     if (daysUntilClosing2 < 0) {
-      daysUntilClosing2 += new Date(
-        purchase.getFullYear(),
-        purchase.getMonth() + 1,
-        0
-      ).getDate();
+      daysUntilClosing2 += new Date(purchase.getFullYear(), purchase.getMonth() + 1, 0).getDate();
     }
 
     if (daysUntilClosing1 < daysUntilClosing2) {
-      setRecommendation(
-        "You should use the card with a closing date on the 25th."
-      );
+      setRecommendation("You should use the card with a closing date on the 25th.");
     } else {
-      setRecommendation(
-        "You should use the card with a closing date on the 20th."
-      );
+      setRecommendation("You should use the card with a closing date on the 20th.");
     }
+    setShowPopup(true); // Trigger the popup
   };
 
-  return (
-    <div>
-      <nav className="bg-teal-500 shadow-md p-8 flex justify-between items-center">
-        <div className="text-4xl text-white font-bold">
-          <Image src={logo} width={130} height={130} alt="Credit Card" />
-        </div>
-        <ul className="flex space-x-6">
-          <li className="nav-item">
-            <a href="/" className="text-white text-lg hover:text-yellow-400">
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="/calculate"
-              className="text-white text-lg hover:text-yellow-400"
-            >
-              คำนวณ
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="/about"
-              className="text-white text-lg hover:text-yellow-400"
-            >
-              เกี่ยวกับ
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="/policy"
-              className="text-white text-lg hover:text-yellow-400"
-            >
-              นโยบาย
-            </a>
-          </li>
-        </ul>
-
-        <div className="text-white text-2xl font-bold">Login</div>
-      </nav>
-      <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white">
-        <div className="flex gap-[8px] p-12 justify-center items-center">
-          <Image src={creditcard} width={400} height={400} alt="Credit Card" />
-          <Image src={creditcard2} width={400} height={400} alt="Credit Card" />
-          <Image src={plus} width={100} height={100} alt="Add Card" />
-        </div>
-        <div className="border-t-4 border-yellow-500 p-4 w-4/5 mx-auto flex justify-center items-center">
-          {" "}
-        </div>
-
-        <div className="flex gap-4 mt-10 p-8">
-          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography
-              variant="h5"
-              gutterBottom
-              className=" mb-4 text-3xl font-bold"
-            >
-              รายได้ทั้งหมด (เดือน)
-            </Typography>
-            <Box component="form" noValidate autoComplete="off">
-              <TextField
-                type="number"
-                value={salary}
-                onChange={(e) => setSalary(Number(e.target.value))}
-                fullWidth
-                margin="normal"
-                className="bg-white rounded-lg"
-              />
-              <Typography
-                variant="h5"
-                gutterBottom
-                className="text-[24px] text-white mt-6"
-              >
-                สัดส่วนภาระหนี้บัตรเครดิตที่รับได้(เดือน)
-              </Typography>
-              <TextField
-                type="number"
-                value={percentage}
-                onChange={(e) => setPercentage(Number(e.target.value))}
-                fullWidth
-                margin="normal"
-                className="bg-white rounded-lg"
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleRecommendation}
-                className="mt-6"
-              >
-                รับคำแนะนำจากเรา
-              </Button>
-            </Box>
-          </div>
-          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography variant="h5" gutterBottom className="text-[24px] text-white">
-              ใช้จ่ายกับ
-            </Typography>
-            <Box component="form" noValidate autoComplete="off">
-              <TextField
-                label="รายละเอียดค่าใช้จ่าย"
-                type="text"
-                value={expenseDescription}
-                onChange={(e) => setExpenseDescription(e.target.value)}
-                fullWidth
-                margin="normal"
-                className="bg-white rounded-lg"
-              />
-              <Typography
-                variant="h5"
-                gutterBottom
-                className="text-[24px] text-white mt-6"
-              >
-                รายจ่าย
-              </Typography>
-              <TextField
-                type="number"
-                value={expenseAmount}
-                onChange={(e) => setExpenseAmount(Number(e.target.value))}
-                fullWidth
-                margin="normal"
-                className="bg-white rounded-lg"
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddExpense}
-                className="mt-6"
-              >
-                เพิ่มรายละเอียดของค่าใช้จ่าย
-              </Button>
-            </Box>
-            <List className="mt-6">
-              {expenses.map((expense, index) => (
-                <ListItem
-                  key={index}
-                  className="flex justify-between bg-white text-black rounded-lg p-4 mb-2"
-                >
-                  <ListItemText
-                    primary={`${expense.description}: ${expense.amount} บาท`}
-                  />
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => handleRemoveExpense(index)}
-                  >
-                    ลบทิ้ง
-                  </Button>
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </div>
-
-        <div className="flex gap-4 mt-10 p-8">
-          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography variant="h5" gutterBottom className="text-xl font-bold">
-              ยอดเงินที่สามารถใช้ได้
-            </Typography>
-            <Typography className="mb-6">{availableMoney} บาท</Typography>
-
-            <Typography variant="h5" gutterBottom className="text-xl font-bold">
-              สามารถใช้เงินกับหนี้บัตรเครดิตได้ ({percentage}% of Salary)
-            </Typography>
-            <Typography className="mb-6">{maxDebt} บาท</Typography>
-
-            <Typography variant="h5" gutterBottom className="text-xl font-bold">
-              ควรใช้บัตรไหนรูดก่อนดี
-            </Typography>
-            <Typography className="mb-6">{recommendation}</Typography>
-          </div>
-
-          <div className="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-6 rounded-lg shadow-lg w-full md:w-1/2 text-white">
-            <Typography
-              variant="h5"
-              gutterBottom
-              className="text-xl font-bold"
-            >
-              วันที่รูดบัตรนั้น
-            </Typography>
-            <Box component="form" noValidate autoComplete="off">
-              <TextField
-                label="กรอกวันที่รูดบัตร"
-                type="text"
-                value={purchaseDate}
-                onChange={(e) => setPurchaseDate(e.target.value)}
-                fullWidth
-                margin="normal"
-                className="bg-white rounded-lg"
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  const dayOfPurchase = new Date(purchaseDate).getDate();
-                  if (dayOfPurchase <= 15) {
-                    setRecommendation(
-                      "ควรใช้บัตรอันที่ 1 ในการรูดครั้งนี้"
-                    );
-                  } else {
-                    setRecommendation(
-                      "ควรใช้บัตรอันที่ 2 ในการรูดครั้งนี้"
-                    );
-                  }
-                }}
-                className="mt-6"
-              >
-                หาบัตรที่ดีที่สุด
-              </Button>
-            </Box>
-          </div>
-        </div>
+  // Popup for recommendation display
+  const Popup = () => (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center ">
+      <div className="bg-white p-4 rounded shadow-md">
+        <h3 className="text-lg font-bold mb-4 text-white ">Recommended Card</h3>
+        <p>{recommendation}</p>
+        <button
+          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+          onClick={() => setShowPopup(false)}
+        >
+          Close
+        </button>
       </div>
     </div>
+  );
+
+  return (
+   <div className="container mx-auto p-4 mt-16">
+  <div className="relative flex gap-[8px] p-12 justify-center items-center">
+    {/* Main credit card images */}
+    <Image src="/cards/Creditcard.png" width={400} height={400} alt="Credit Card" />
+    <Image src="/cards/Creditcard.png" width={400} height={400} alt="Credit Card" />
+  </div>
+
+  <h1 className="text-2xl font-bold mb-4 text-white">ข้อมูลการเงินของผู้ใช้</h1>
+
+  <div className="mb-6">
+    <label className="block text-white">เงินเดือน</label>
+    <input
+      type="number"
+      value={salary}
+      onChange={(e) => setSalary(Number(e.target.value))}
+      className="border p-2 w-full"
+    />
+
+    <label className="block text-white mt-4">จำนวนการซื้อ</label>
+    <input
+      type="number"
+      value={purchaseAmount}
+      onChange={(e) => setPurchaseAmount(Number(e.target.value))}
+      className="border p-2 w-full"
+    />
+
+    <label className="block text-white mt-4">เปอร์เซ็นต์หนี้สูงสุด</label>
+    <input
+      type="number"
+      value={percentage}
+      onChange={(e) => setPercentage(Number(e.target.value))}
+      className="border p-2 w-full"
+    />
+
+    <button
+      onClick={handleRecommendation}
+      className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+    >
+      รับคำแนะนำ
+    </button>
+  </div>
+
+  {/* Expenses Section */}
+  <h2 className="text-xl font-semibold mb-4 text-white">ค่าใช้จ่าย</h2>
+
+  <div className="mb-6">
+    <label className="block text-white">รายละเอียดค่าใช้จ่าย</label>
+    <input
+      type="text"
+      value={expenseDescription}
+      onChange={(e) => setExpenseDescription(e.target.value)}
+      className="border p-2 w-full"
+    />
+
+    <label className="block text-white mt-4">จำนวนค่าใช้จ่าย</label>
+    <input
+      type="number"
+      value={expenseAmount}
+      onChange={(e) => setExpenseAmount(Number(e.target.value))}
+      className="border p-2 w-full"
+    />
+
+    <button
+      onClick={handleAddExpense}
+      className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+    >
+      เพิ่มค่าใช้จ่าย
+    </button>
+  </div>
+
+  <ul className="mb-6">
+    {expenses.map((expense, index) => (
+      <li key={index} className="mb-2 flex justify-between">
+        <span>{`${expense.description}: ${expense.amount}`}</span>
+        <button
+          onClick={() => handleRemoveExpense(index)}
+          className="bg-red-500 text-white py-1 px-3 rounded"
+        >
+          ลบ
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  {/* Credit Card Section */}
+  <h2 className="text-xl font-semibold mb-4 text-white">เพิ่มบัตรเครดิต</h2>
+
+  <div className="mb-6">
+    <label className="block text-white">ชื่อบัตร</label>
+    <input
+      type="text"
+      value={cardName}
+      onChange={(e) => setCardName(e.target.value)}
+      className="border p-2 w-full"
+    />
+
+    <label className="block text-white mt-4">วงเงินเครดิต</label>
+    <input
+      type="number"
+      value={creditLimit}
+      onChange={(e) => setCreditLimit(Number(e.target.value))}
+      className="border p-2 w-full"
+    />
+
+    <label className="block text-white mt-4">รอบบิล</label>
+    <input
+      type="text"
+      value={billingCycle}
+      onChange={(e) => setBillingCycle(e.target.value)}
+      className="border p-2 w-full"
+    />
+
+    <button
+      onClick={handleAddCard}
+      className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+    >
+      เพิ่มบัตร
+    </button>
+  </div>
+
+  {/* Show popup if necessary */}
+  {showPopup && <Popup />}
+</div>
   );
 };
 
